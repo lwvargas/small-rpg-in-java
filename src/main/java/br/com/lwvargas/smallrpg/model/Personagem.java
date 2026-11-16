@@ -4,8 +4,8 @@ public abstract class Personagem extends Entidade{
     private int nivel;
     private int experiencia;
 
-    protected Personagem(String nome, int vidaMaxima, int danoBase, int defesa, int vigor) {
-        super(nome, vidaMaxima, danoBase, defesa, vigor);
+    protected Personagem(String nome, int vidaMaxima, int danoMinimo, int danoMaximo, int defesa, int vigor) {
+        super(nome, vidaMaxima, danoMinimo, danoMaximo, defesa, vigor);
         this.nivel = 1;
         this.experiencia = 0;
     }
