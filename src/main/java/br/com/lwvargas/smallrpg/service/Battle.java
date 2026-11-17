@@ -13,8 +13,9 @@ public class Battle {
         ESQUIVAR
     }
 
-    public int attackSolution(Entidade atacante, Entidade defensor, DefensiveAction defensiveAction) {
+    public resultadoAtaque attackSolution(Entidade atacante, Entidade defensor, DefensiveAction defensiveAction) {
         int attack = atacante.rolarAtaque();
+        int danoRecebido;
         int resposta;
         int defesaRolada = 0;
 
@@ -24,15 +25,28 @@ public class Battle {
         } else {
             resposta = defensor.rolarEsquiva();
         }
-        if(resposta>attack) {
+        if (resposta > attack) {
             if (defensiveAction == DefensiveAction.DEFENDER) {
-                return defensor.receberAtaqueBloqueado(atacante, attack, defesaRolada);
+                danoRecebido = defensor.receberAtaqueBloqueado(atacante, attack, defesaRolada);
+            } else {
+                danoRecebido = 0;
             }
-            return 0;
+        } else {
+            danoRecebido = defensor.receberAtaque(atacante, attack, defesaRolada);
         }
-        return defensor.receberAtaque(atacante, attack, defesaRolada);
+        return new resultadoAtaque(atacante,
+                defensor,
+                defensiveAction,
+                attack,
+                resposta,
+                danoRecebido,
+                attack >= resposta);
     }
 
+    public resultadoAtaque attackMonster(Entidade atacante, Monstro monstro){
+        DefensiveAction randomCase = randomMonsterDefensive(monstro);
+        return attackSolution(atacante, monstro, randomCase);
+    }
 
     private final Random random = new Random();
 
@@ -59,10 +73,5 @@ public class Battle {
             return DefensiveAction.DEFENDER;
         }
         return DefensiveAction.ESQUIVAR;
-    }
-
-    public int attackMonster(Entidade atacante, Monstro monstro) {
-        DefensiveAction randomCase = randomMonsterDefensive(monstro);
-        return attackSolution(atacante, monstro, randomCase);
     }
 }
