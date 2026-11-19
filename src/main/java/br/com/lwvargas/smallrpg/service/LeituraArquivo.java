@@ -74,6 +74,7 @@ public class LeituraArquivo {
             case "MagoEletrico": return new MagoEletrico(nome);
             case "ArqueiroFlechaExplosiva": return new ArqueiroFlechaExplosiva(nome);
             case "ArqueiroFlechasVenenosas": return new ArqueiroFlechasVenenosas(nome);
+            case "ArqueiroFlechasMultiplas": return new ArqueiroFlechasMultiplas(nome);
             default: throw new IllegalArgumentException("Classe salva desconhecida: " + classe);
         }
     }

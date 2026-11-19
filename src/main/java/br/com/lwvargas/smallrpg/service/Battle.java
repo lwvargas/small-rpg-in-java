@@ -20,8 +20,16 @@ public class Battle {
     }
 
     public resultadoAtaque attackSolution(Entidade atacante, Entidade defensor, DefensiveAction defensiveAction, int ataque){
+        return attackSolution(atacante, defensor, defensiveAction, ataque, 0);
+    }
+
+    private resultadoAtaque attackSolution(Entidade atacante, Entidade defensor, DefensiveAction defensiveAction, int ataque, int danoNoAtacante){
         if (ataque <= 0) {
-            return new resultadoAtaque(atacante, defensor, defensiveAction, ataque, 0, 0, false);
+            return new resultadoAtaque(atacante, defensor, defensiveAction, ataque, 0, 0, false, danoNoAtacante);
+        }
+        EfeitoStatus reducaoDanoCausado = atacante.buscarEfeito(TipoEfeito.REDUCAO_DANO_CAUSADO);
+        if (reducaoDanoCausado != null) {
+            ataque = Math.max(1, ataque - reducaoDanoCausado.getIntensidade());
         }
         int resposta;
         int defesaRolada = 0;
@@ -52,7 +60,8 @@ public class Battle {
                 ataque,
                 resposta,
                 danoRecebido,
-                ataque >= resposta
+                ataque >= resposta,
+                danoNoAtacante
         );
     }
 
@@ -67,6 +76,7 @@ public class Battle {
         if (jogador instanceof Tanque tanque){
             tanque.desativarPassivaNaRodada();
         }
+        int vidaAntesDaHabilidade = jogador.getVidaAtual();
         int ataque;
 
         if(acao == AcaoJogador.ATACAR_NORMAL){
@@ -78,13 +88,15 @@ public class Battle {
         }else{
             ataque = jogador.usarHabilidade(monstro);
         }
+        int danoNoAtacante = vidaAntesDaHabilidade - jogador.getVidaAtual();
         DefensiveAction defesaMonstro = randomMonsterDefensive(monstro);
 
         resultadoAtaque resultado = attackSolution(
                 jogador,
                 monstro,
                 defesaMonstro,
-                ataque
+                ataque,
+                danoNoAtacante
         );
         if (acao == AcaoJogador.USAR_HABILIDADE && ataque > 0 && resultado.isAtaqueSuperouDefesa()) {
             jogador.aplicarEfeitoHabilidade(monstro);

@@ -13,6 +13,7 @@ public class resultadoAtaque {
     private int valorResposta;
     private int danoRecebido;
     private boolean ataqueSuperouDefesa;
+    private int danoNoAtacante;
 
 
     public resultadoAtaque(Entidade atacante,
@@ -21,7 +22,8 @@ public class resultadoAtaque {
                            int valorAtaque,
                            int valorResposta,
                            int danoRecebido,
-                           boolean ataqueSuperouDefesa) {
+                           boolean ataqueSuperouDefesa,
+                           int danoNoAtacante) {
         this.atacante = atacante;
         this.defensor = defensor;
         this.acaoDefensiva = acaoDefensiva;
@@ -29,6 +31,7 @@ public class resultadoAtaque {
         this.valorResposta = valorResposta;
         this.danoRecebido = danoRecebido;
         this.ataqueSuperouDefesa = ataqueSuperouDefesa;
+        this.danoNoAtacante = danoNoAtacante;
     }
 
 
@@ -52,6 +55,9 @@ public class resultadoAtaque {
     }
     public boolean isAtaqueSuperouDefesa() {
         return ataqueSuperouDefesa;
+    }
+    public int getDanoNoAtacante() {
+        return danoNoAtacante;
     }
 
 

@@ -42,12 +42,17 @@ public class ArqueiroFlechaExplosiva extends Arqueiro{
         }
         flechasEspeciais--;
 
+        int danoDaFlecha = rolarAtaque() + DANO_EXTRA;
         int sorteio = random.nextInt(100)+1;
 
         if(sorteio<=CHANCE_EXPLODIR_ANTES_DO_ALVO){
+            receberDano(danoDaFlecha);
+            if (!possuiEfeito(TipoEfeito.SEM_DEFESA_PROXIMO_ATAQUE)) {
+                adicionarEfeito(new EfeitoStatus(TipoEfeito.SEM_DEFESA_PROXIMO_ATAQUE, 1, 1));
+            }
             return 0;
         }
-        return rolarAtaque()+DANO_EXTRA;
+        return danoDaFlecha;
     }
     @Override
     public void aplicarEfeitoHabilidade(Entidade alvo) {

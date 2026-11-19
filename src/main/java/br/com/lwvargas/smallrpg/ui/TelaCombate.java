@@ -28,6 +28,9 @@ public class TelaCombate {
                 resultadoAtaque resultadoJogador = battle.resolverAcaoJogador(personagem, monstro, acaoJogador);
 
                 mostrarResultadoAtaque(resultadoJogador, monstro, true);
+                if (!personagem.estaVivo()) {
+                    break;
+                }
             } else {
                 System.out.println(personagem.getNome() + " esta atordoado e perdeu o turno");
             }
@@ -113,11 +116,20 @@ public class TelaCombate {
             System.out.println("=====ATAQUE BEM-SUCEDIDO=====");
         } else {
             System.out.println("=====ATAQUE FALHOU=====");
-            if (resultado.getAcaoDefensiva() == DefensiveAction.DEFENDER) {
+            if (resultado.getDanoNoAtacante() > 0) {
+                System.out.println("A flecha explosiva atingiu você antes de alcançar o alvo.");
+            } else if (resultado.getValorAtaque() <= 0) {
+                System.out.println("A habilidade não causou dano ao alvo.");
+            } else if (resultado.getAcaoDefensiva() == DefensiveAction.DEFENDER) {
                 System.out.println(alvo.getNome() + " defendeu o ataque");
             } else {
                 System.out.println(alvo.getNome() + " esquivou do ataque");
             }
+        }
+
+        if (resultado.getDanoNoAtacante() > 0) {
+            System.out.println("Dano sofrido pelo personagem: " + resultado.getDanoNoAtacante());
+            System.out.println("Vida do personagem: " + resultado.getAtacante().getVidaAtual() + "/" + resultado.getAtacante().getVidaMaxima());
         }
 
         String atacante = ataqueDoJogador ? "Dano causado" : "Dano causado pelo monstro";

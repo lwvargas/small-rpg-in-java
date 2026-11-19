@@ -31,8 +31,8 @@ public class MagoGelo extends Mago{
     }
     @Override
     public void aplicarEfeitoHabilidade(Entidade alvo) {
-        if (!alvo.possuiEfeito(TipoEfeito.REDUCAO_DANO)) {
-            alvo.adicionarEfeito(new EfeitoStatus(TipoEfeito.REDUCAO_DANO, DURACAO_LENTIDAO, REDUCAO_DANO_INIMIGO));
+        if (!alvo.possuiEfeito(TipoEfeito.REDUCAO_DANO_CAUSADO)) {
+            alvo.adicionarEfeito(new EfeitoStatus(TipoEfeito.REDUCAO_DANO_CAUSADO, DURACAO_LENTIDAO, REDUCAO_DANO_INIMIGO));
         }
     }
     @Override
