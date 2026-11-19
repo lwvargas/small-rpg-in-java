@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class MissaoCaverna extends Missao {
 
     public MissaoCaverna() {
-        super("Média: Monstros da caverna", "Morcegos e goblins saem da caverna à noite e assustam a vila.", 2);
+        super("Média: Monstros da caverna", "Morcegos e goblins saem da caverna à noite e assustam a vila.", 7);
     }
 
     @Override

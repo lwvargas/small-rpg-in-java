@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class MissaoChefeCaverna extends Missao {
 
     public MissaoChefeCaverna() {
-        super("Difícil: O chefe da caverna", "Um ogro enorme tomou o fundo da caverna e ameaça a vila.", 2);
+        super("Difícil: O chefe da caverna", "Um ogro enorme tomou o fundo da caverna e ameaça a vila.", 10);
     }
 
     @Override

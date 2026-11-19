@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class MissaoBosque extends Missao {
 
     public MissaoBosque() {
-        super("Fácil: A cobra do bosque", "Uma cobra está levando as galinhas de um morador da vila.", 1);
+        super("Fácil: A cobra do bosque", "Uma cobra está levando as galinhas de um morador da vila.", 5);
     }
 
     @Override

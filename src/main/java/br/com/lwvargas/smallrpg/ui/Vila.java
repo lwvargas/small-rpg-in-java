@@ -24,6 +24,10 @@ public class Vila {
         Cenario.VILA.mostrar();
 
         System.out.printf("Boas-vindas à vila, %s!%n", personagem.getNome());
+        if (jogoConcluido()) {
+            System.out.println("Você já concluiu o jogo. Inicie um novo jogo para jogar novamente.");
+            return;
+        }
         System.out.println("Na praça, um morador acaba de prender um pedido de ajuda no mural.");
 
         mostrarMenu(personagem, keyboard);
@@ -36,7 +40,7 @@ public class Vila {
             System.out.println("3. Sair");
             System.out.print("Escolha uma opção: ");
 
-            int opcao = keyboard.nextInt();
+            int opcao = EntradaConsole.lerInteiro(keyboard);
 
             switch (opcao) {
                 case 1:
@@ -55,7 +59,7 @@ public class Vila {
                     System.out.println("0. Voltar.");
                     System.out.print("Escolha uma opção: ");
 
-                    int escolhaMissao = keyboard.nextInt();
+                    int escolhaMissao = EntradaConsole.lerInteiro(keyboard);
 
                     if (escolhaMissao >= 1 && escolhaMissao <= missoes.length) {
                         Missao missao = missoes[escolhaMissao - 1];
@@ -67,6 +71,9 @@ public class Vila {
                         } else {    
                             boolean venceu = missao.iniciar(personagem, keyboard);
                             voltarDaMissao(personagem, missao, venceu);
+                            if (venceu && missao instanceof MissaoMontanha) {
+                                return;
+                            }
                         }
                     } else if (escolhaMissao != 0) {
                         System.out.println("Opção inválida.");
@@ -94,9 +101,23 @@ public class Vila {
             System.out.println("\nVocê foi derrotado... Os moradores te carregam de volta à vila.");
         }
 
+        personagem.limparEfeitos();
         personagem.restaurarVida();
         escritaArquivo.salvar(personagem, missoes);
+        if (venceu && missao instanceof MissaoMontanha) {
+            System.out.println("Fim de jogo. Obrigado por jogar!");
+            return;
+        }
         Cenario.VILA.mostrar();
         System.out.println("Você descansa na vila e recupera toda a sua vida.");
+    }
+
+    private boolean jogoConcluido() {
+        for (Missao missao : missoes) {
+            if (missao instanceof MissaoMontanha && missao.isConcluida()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

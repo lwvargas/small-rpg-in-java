@@ -26,15 +26,15 @@ public class EscritaArquivo {
                 flechasEspeciais = arqueiro.getFlechasEspeciais();
             }
 
-            saida.println(personagem.getClass().getSimpleName() + ","
-                    + personagem.getNome() + ","
+            saida.println(valorCsv(personagem.getClass().getSimpleName()) + ","
+                    + valorCsv(personagem.getNome()) + ","
                     + personagem.getNivel() + ","
                     + personagem.getExperiencia() + ","
                     + manaAtual + ","
                     + flechasEspeciais);
 
             for (Missao missao : missoes) {
-                saida.println(missao.getTitulo() + "," + missao.isConcluida());
+                saida.println(valorCsv(missao.getTitulo()) + "," + missao.isConcluida());
             }
 
             saida.close();
@@ -43,5 +43,9 @@ public class EscritaArquivo {
         } catch (IOException e) {
             System.out.println("Erro ao salvar o jogo.");
         }
+    }
+
+    private String valorCsv(String valor) {
+        return "\"" + valor.replace("\"", "\"\"") + "\"";
     }
 }

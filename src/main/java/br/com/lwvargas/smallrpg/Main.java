@@ -2,6 +2,7 @@ package br.com.lwvargas.smallrpg;
 
 import br.com.lwvargas.smallrpg.model.*;
 import br.com.lwvargas.smallrpg.service.LeituraArquivo;
+import br.com.lwvargas.smallrpg.ui.EntradaConsole;
 import br.com.lwvargas.smallrpg.ui.Vila;
 
 import java.util.Scanner;
@@ -51,7 +52,7 @@ public class Main {
         System.out.println("                2. Tanque");
         System.out.println("                3. Mago");
         System.out.println("                4. Arqueiro");
-        int opcaoClasse = keyboard.nextInt();
+        int opcaoClasse = EntradaConsole.lerInteiro(keyboard);
 
         switch (opcaoClasse){
             case 1:
@@ -59,7 +60,7 @@ public class Main {
                 System.out.println("                1. Barbaro");
                 System.out.println("                2. Guerreiro de duas espadas");
                 System.out.println("                3. Guerreiro de espada e escudo");
-                int opcaoSubclasseG = keyboard.nextInt();
+                int opcaoSubclasseG = EntradaConsole.lerInteiro(keyboard);
                 switch (opcaoSubclasseG) {
                     case 1:
                         personagem = new GuerreiroBarbaro(nomePersonagem);
@@ -79,7 +80,7 @@ public class Main {
                 System.out.println("========== Escolha uma das opcoes de Tanque ==========");
                 System.out.println("                1. Tanque Refletor de dano");
                 System.out.println("                2. Tanque Redutor de dano");
-                int opcaoSubclasseT = keyboard.nextInt();
+                int opcaoSubclasseT = EntradaConsole.lerInteiro(keyboard);
                 switch (opcaoSubclasseT) {
                     case 1:
                         personagem = new TanqueRefletor(nomePersonagem);
@@ -97,7 +98,7 @@ public class Main {
                 System.out.println("                1. Mago de fogo");
                 System.out.println("                2. Mago de gelo");
                 System.out.println("                3. Mago Eletrico");
-                int opcaoSubclasseM = keyboard.nextInt();
+                int opcaoSubclasseM = EntradaConsole.lerInteiro(keyboard);
                 switch(opcaoSubclasseM){
                     case 1:
                         personagem = new MagoFogo(nomePersonagem);
@@ -118,7 +119,7 @@ public class Main {
                 System.out.println("                1. Arqueiro com flechas explosivas");
                 System.out.println("                2. Arqueiro com flechas venenosas");
                 System.out.println("                3. Arqueiro com flechas Multiplas");
-                int opcaoSubclasseA = keyboard.nextInt();
+                int opcaoSubclasseA = EntradaConsole.lerInteiro(keyboard);
                 switch (opcaoSubclasseA){
                     case 1:
                         personagem = new ArqueiroFlechaExplosiva(nomePersonagem);

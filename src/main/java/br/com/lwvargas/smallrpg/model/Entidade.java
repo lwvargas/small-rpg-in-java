@@ -55,6 +55,9 @@ public abstract class Entidade {
         }
         efeitosAtivos.add(efeito);
     }
+    public void limparEfeitos(){
+        efeitosAtivos.clear();
+    }
     public boolean possuiEfeito(TipoEfeito tipo) {
         return buscarEfeito(tipo) != null;
     }

@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class MissaoMontanha extends Missao {
 
     public MissaoMontanha() {
-        super("Final: O dragão da montanha", "Um dragão atacou a vila e voltou para o seu ninho na montanha.", 3);
+        super("Final: O dragão da montanha", "Um dragão atacou a vila e voltou para o seu ninho na montanha.", 10);
     }
 
     @Override

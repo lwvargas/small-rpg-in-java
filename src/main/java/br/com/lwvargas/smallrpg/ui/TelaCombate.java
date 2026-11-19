@@ -1,8 +1,9 @@
 package br.com.lwvargas.smallrpg.ui;
 
-import br.com.lwvargas.smallrpg.model.Monstro;
 import br.com.lwvargas.smallrpg.model.Entidade;
+import br.com.lwvargas.smallrpg.model.Monstro;
 import br.com.lwvargas.smallrpg.model.Personagem;
+import br.com.lwvargas.smallrpg.model.TipoEfeito;
 import br.com.lwvargas.smallrpg.service.AcaoJogador;
 import br.com.lwvargas.smallrpg.service.Battle;
 import br.com.lwvargas.smallrpg.service.DefensiveAction;
@@ -48,7 +49,13 @@ public class TelaCombate {
                 break;
             }
             if (battle.podeAgir(monstro)) {
-                DefensiveAction escolhaDoJogador = escolherDefesa(keyboard);
+                DefensiveAction escolhaDoJogador;
+                if (personagem.possuiEfeito(TipoEfeito.SEM_DEFESA_PROXIMO_ATAQUE)) {
+                    System.out.println("Você não pode se defender deste ataque.");
+                    escolhaDoJogador = DefensiveAction.ESQUIVAR;
+                } else {
+                    escolhaDoJogador = escolherDefesa(keyboard);
+                }
                 resultadoAtaque resultadoMonstro = battle.attackSolution(monstro, personagem, escolhaDoJogador);
                 mostrarResultadoAtaque(resultadoMonstro, personagem, false);
             } else {
@@ -67,7 +74,7 @@ public class TelaCombate {
             System.out.println("1. Ataque normal");
             int opcao;
             do {
-                opcao = keyboard.nextInt();
+                opcao = EntradaConsole.lerInteiro(keyboard);
                 if (opcao != 1) {
                     System.out.println("Digite 1 para atacar normalmente.");
                 }
@@ -80,7 +87,7 @@ public class TelaCombate {
             System.out.println("\nEscolha sua acao:");
             System.out.println("1. Ataque normal");
             System.out.println("2. " + personagem.getNomeHabilidade() + " - " + personagem.getDescricaoHabilidade());
-            opcaoAtaque = keyboard.nextInt();
+            opcaoAtaque = EntradaConsole.lerInteiro(keyboard);
 
             if (opcaoAtaque != 1 && opcaoAtaque != 2) {
                 System.out.println("Digite 1 ou 2");
@@ -99,7 +106,7 @@ public class TelaCombate {
             System.out.println("\nComo vai se defender?");
             System.out.println("1. Defender");
             System.out.println("2. Esquivar");
-            opcaoDefesa = keyboard.nextInt();
+            opcaoDefesa = EntradaConsole.lerInteiro(keyboard);
 
             if (opcaoDefesa != 1 && opcaoDefesa != 2) {
                 System.out.println("Digite 1 ou 2");
