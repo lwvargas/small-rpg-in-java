@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 public class resultadoAtaque {
     private Entidade atacante;
     private Entidade defensor;
-    private Battle.DefensiveAction acaoDefensiva;
+    private DefensiveAction acaoDefensiva;
     private int valorAtaque;
     private int valorResposta;
     private int danoRecebido;
@@ -17,7 +17,7 @@ public class resultadoAtaque {
 
     public resultadoAtaque(Entidade atacante,
                            Entidade defensor,
-                           Battle.DefensiveAction acaoDefensiva,
+                           DefensiveAction acaoDefensiva,
                            int valorAtaque,
                            int valorResposta,
                            int danoRecebido,
@@ -38,7 +38,7 @@ public class resultadoAtaque {
     public Entidade getDefensor() {
         return defensor;
     }
-    public Battle.DefensiveAction getAcaoDefensiva() {
+    public DefensiveAction getAcaoDefensiva() {
         return acaoDefensiva;
     }
     public int getValorAtaque() {

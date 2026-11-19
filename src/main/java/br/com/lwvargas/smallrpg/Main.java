@@ -1,20 +1,50 @@
 package br.com.lwvargas.smallrpg;
 
 import br.com.lwvargas.smallrpg.model.*;
-import br.com.lwvargas.smallrpg.service.Battle;
-import br.com.lwvargas.smallrpg.service.resultadoAtaque;
+import br.com.lwvargas.smallrpg.service.LeituraArquivo;
+import br.com.lwvargas.smallrpg.ui.Vila;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
         Scanner keyboard = new Scanner(System.in);
+        Vila vila = new Vila();
+        LeituraArquivo leituraArquivo = new LeituraArquivo();
 
+        System.out.println("===== Bem vindo ao Java RPG =====");
+        System.out.println("1. Novo jogo");
+        System.out.println("2. Carregar jogo");
+        System.out.println("3. Sair");
 
-        System.out.print("Digite o nome do seu personagem: ");
-        String nomePersonagem = keyboard.nextLine();
+        String opcao;
+        do {
+            System.out.print("Escolha uma opção: ");
+            opcao = keyboard.nextLine();
+
+            switch (opcao) {
+                case "1":
+                    System.out.println("Novo jogo selecionado");
+                    break;
+                case "2":
+                    Personagem personagemSalvo = leituraArquivo.carregar(vila.getMissoes());
+                    if (personagemSalvo != null) {
+                        vila.entrar(personagemSalvo, keyboard);
+                        return;
+                    }
+                    System.out.println("Nenhum jogo salvo encontrado.");
+                    break;
+                case "3":
+                    System.out.println("Saindo do jogo...");
+                    System.exit(0);
+                default:
+                    System.out.println("Opcao invalida. Digite 1, 2 ou 3.");
+            }
+        } while (!opcao.equals("1"));
 
         Personagem personagem;
+        System.out.print("Digite o nome do seu personagem: ");
+        String nomePersonagem = keyboard.nextLine();
 
         System.out.println("========== Escolha uma das opcoes de classes ==========");
         System.out.println("                1. Guerreiro");
@@ -22,6 +52,7 @@ public class Main {
         System.out.println("                3. Mago");
         System.out.println("                4. Arqueiro");
         int opcaoClasse = keyboard.nextInt();
+
         switch (opcaoClasse){
             case 1:
                 System.out.println("========== Escolha uma das opcoes de Guerreiro ==========");
@@ -108,70 +139,7 @@ public class Main {
                 return;
         }
 
-        Monstro monstro = new Ogro();
+        vila.entrar(personagem, keyboard);
 
-        Battle battle = new Battle();
-            do {
-                int opcaoAtaque;
-                do{
-                    System.out.println("1. Atacar");
-                    opcaoAtaque = keyboard.nextInt();
-
-                    if(opcaoAtaque != 1){
-                        System.out.println("Por enquanto voce so pode atacar");
-                    }
-                }while(opcaoAtaque != 1);
-                resultadoAtaque resultadoJogador = battle.attackMonster(personagem, monstro);
-                if(resultadoJogador.isAtaqueSuperouDefesa()){
-                    System.out.println("=============SUCESSO=============");
-                }else if(resultadoJogador.getAcaoDefensiva() == Battle.DefensiveAction.DEFENDER){
-                    System.out.println("=============FALHA=============");
-                    System.out.println("O inimigo defendeu");
-                }else{
-                    System.out.println("=============FALHA=============");
-                    System.out.println("O inimigo esquivou");
-                }
-
-                System.out.println("Dano causado: "+resultadoJogador.getDanoRecebido());
-                System.out.println("Vida do inimigo: "+resultadoJogador.getDefensor().getVidaAtual()
-                + "/" + resultadoJogador.getDefensor().getVidaMaxima());
-                if (monstro.getVidaAtual() > 0) {
-                    Battle.DefensiveAction escolhaDoJogador;
-                    int opcaoDefesa;
-
-                    do {
-                        System.out.println("Como vai se defender?");
-                        System.out.println("1. Defender");
-                        System.out.println("2. Esquivar");
-                        opcaoDefesa = keyboard.nextInt();
-
-                        if (opcaoDefesa != 1 && opcaoDefesa != 2) {
-                            System.out.println("Opcao invalida. Digite 1 ou 2");
-                        }
-                    } while (opcaoDefesa != 1 && opcaoDefesa != 2);
-
-                    if (opcaoDefesa == 1) {
-                        escolhaDoJogador = Battle.DefensiveAction.DEFENDER;
-                    } else {
-                        escolhaDoJogador = Battle.DefensiveAction.ESQUIVAR;
-                    }
-
-                   resultadoAtaque resultadoMonstro = battle.attackSolution(monstro, personagem, escolhaDoJogador);
-                    if(resultadoMonstro.isAtaqueSuperouDefesa()){
-                        System.out.println("=====FALHA=====");
-                        System.out.println("Voce tomara dano");
-                    }else if(resultadoMonstro.getAcaoDefensiva() == Battle.DefensiveAction.DEFENDER){
-                        System.out.println("=============SUCESSO=============");
-                        System.out.println("Sua defesa superou o ataque");
-                    }else{
-                        System.out.println("=============SUCESSO=============");
-                        System.out.println("Voce conseguiu se esquivar");
-                    }
-
-                    System.out.println("Dano recebido: "+resultadoMonstro.getDanoRecebido());
-                    System.out.println("Vida atual: "+resultadoMonstro.getDefensor().getVidaAtual()
-                            + "/" + resultadoMonstro.getDefensor().getVidaMaxima());
-                }
-            }while (personagem.getVidaAtual() > 0 && monstro.getVidaAtual() > 0) ;
     }
 }

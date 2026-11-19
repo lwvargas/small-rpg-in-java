@@ -3,73 +3,125 @@ package br.com.lwvargas.smallrpg.service;
 import java.util.Random;
 
 import br.com.lwvargas.smallrpg.model.Entidade;
+import br.com.lwvargas.smallrpg.model.Mago;
 import br.com.lwvargas.smallrpg.model.Monstro;
+import br.com.lwvargas.smallrpg.model.Personagem;
+import br.com.lwvargas.smallrpg.model.Tanque;
+import br.com.lwvargas.smallrpg.model.TipoEfeito;
 
 
 public class Battle {
-
-    public enum DefensiveAction {
-        DEFENDER,
-        ESQUIVAR
-    }
+    private final Random random = new Random();
 
     public resultadoAtaque attackSolution(Entidade atacante, Entidade defensor, DefensiveAction defensiveAction) {
-        int attack = atacante.rolarAtaque();
-        int danoRecebido;
+        int ataque = atacante.rolarAtaque();
+
+        return attackSolution(atacante, defensor, defensiveAction, ataque);
+    }
+
+    public resultadoAtaque attackSolution(Entidade atacante, Entidade defensor, DefensiveAction defensiveAction, int ataque){
+        if (ataque <= 0) {
+            return new resultadoAtaque(atacante, defensor, defensiveAction, ataque, 0, 0, false);
+        }
         int resposta;
         int defesaRolada = 0;
 
-        if (defensiveAction == DefensiveAction.DEFENDER) {
+        if(defensor.possuiEfeito(TipoEfeito.SEM_DEFESA_PROXIMO_ATAQUE) || defensor.possuiEfeito(TipoEfeito.ATORDOAMENTO)){
+            resposta = 0;
+        }else if(defensiveAction == DefensiveAction.DEFENDER){
             defesaRolada = defensor.rolarDefesa();
             resposta = defesaRolada;
-        } else {
+        }else{
             resposta = defensor.rolarEsquiva();
         }
-        if (resposta > attack) {
-            if (defensiveAction == DefensiveAction.DEFENDER) {
-                danoRecebido = defensor.receberAtaqueBloqueado(atacante, attack, defesaRolada);
-            } else {
+        int danoRecebido;
+
+        if(resposta>ataque){
+            if(defensiveAction == DefensiveAction.DEFENDER){
+                danoRecebido = defensor.receberAtaqueBloqueado(atacante, ataque, defesaRolada);
+            }else{
                 danoRecebido = 0;
             }
-        } else {
-            danoRecebido = defensor.receberAtaque(atacante, attack, defesaRolada);
+        }else{
+            danoRecebido = defensor.receberAtaque(atacante, ataque, defesaRolada);
         }
-        return new resultadoAtaque(atacante,
+        return new resultadoAtaque(
+                atacante,
                 defensor,
                 defensiveAction,
-                attack,
+                ataque,
                 resposta,
                 danoRecebido,
-                attack >= resposta);
+                ataque >= resposta
+        );
     }
 
-    public resultadoAtaque attackMonster(Entidade atacante, Monstro monstro){
-        DefensiveAction randomCase = randomMonsterDefensive(monstro);
-        return attackSolution(atacante, monstro, randomCase);
+    public resultadoAtaque resolverAcaoJogador(
+            Personagem jogador,
+            Monstro monstro,
+            AcaoJogador acao
+    ){
+        if(acao == null){
+            throw new IllegalArgumentException("A acao nao pode ser nula");
+        }
+        if (jogador instanceof Tanque tanque){
+            tanque.desativarPassivaNaRodada();
+        }
+        int ataque;
+
+        if(acao == AcaoJogador.ATACAR_NORMAL){
+            ataque = jogador.rolarAtaque();
+
+            if(jogador instanceof Mago){
+                ataque = Math.max(1, ataque * 20/100);
+            }
+        }else{
+            ataque = jogador.usarHabilidade(monstro);
+        }
+        DefensiveAction defesaMonstro = randomMonsterDefensive(monstro);
+
+        resultadoAtaque resultado = attackSolution(
+                jogador,
+                monstro,
+                defesaMonstro,
+                ataque
+        );
+        if (acao == AcaoJogador.USAR_HABILIDADE && ataque > 0 && resultado.isAtaqueSuperouDefesa()) {
+            jogador.aplicarEfeitoHabilidade(monstro);
+        }
+        return resultado;
     }
 
-    private final Random random = new Random();
-
-    public DefensiveAction randomMonsterDefensive(Monstro monstro) {
+    public boolean podeAgir(Entidade entidade){
+        return !entidade.possuiEfeito(TipoEfeito.ATORDOAMENTO);
+    }
+    public int processarInicioDoTurno(Entidade entidade){
+        return entidade.processarDanoContinuo();
+    }
+    public void finalizarTurno(Entidade entidade){
+        entidade.avancarRodadaEfeitos();
+    }
+    public DefensiveAction randomMonsterDefensive(Monstro monstro){
         int defesa = monstro.getDefesa();
         int vigor = monstro.getVigor();
         int vantagem = defesa - vigor;
         int diferenca = Math.abs(vantagem);
-        int chanceFavorecida = Math.min(50 + diferenca * 5, 90);
-        int sorteio = random.nextInt(100) + 1;
-        if (vantagem > 0) {
-            if (sorteio <= chanceFavorecida) {
+        int chanceFavorecida = Math.min(50+diferenca*5,90);
+        int sorteio = random.nextInt(100)+1;
+
+        if(vantagem>0){
+            if(sorteio<=chanceFavorecida){
                 return DefensiveAction.DEFENDER;
             }
             return DefensiveAction.ESQUIVAR;
         }
-        if (vantagem < 0) {
-            if (sorteio <= chanceFavorecida) {
+        if(vantagem<0){
+            if(sorteio<=chanceFavorecida){
                 return DefensiveAction.ESQUIVAR;
             }
             return DefensiveAction.DEFENDER;
         }
-        if (sorteio <= 50) {
+        if(sorteio <=50){
             return DefensiveAction.DEFENDER;
         }
         return DefensiveAction.ESQUIVAR;
