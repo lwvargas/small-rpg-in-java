@@ -7,6 +7,7 @@ import br.com.lwvargas.smallrpg.model.Mago;
 import br.com.lwvargas.smallrpg.model.Monstro;
 import br.com.lwvargas.smallrpg.model.Personagem;
 import br.com.lwvargas.smallrpg.model.Tanque;
+import br.com.lwvargas.smallrpg.model.EfeitoStatus;
 import br.com.lwvargas.smallrpg.model.TipoEfeito;
 
 
