@@ -7,11 +7,11 @@ public class GuerreiroBarbaro extends Guerreiro {
 
     public GuerreiroBarbaro(String nome) {
         super(nome,
-                110,
-                14,
-                22,
+                105,
+                12,
+                18,
                 4,
-                10);
+                9);
     }
     @Override
     public String getNomeHabilidade(){

@@ -13,10 +13,10 @@ public class ArqueiroFlechaExplosiva extends Arqueiro{
     public ArqueiroFlechaExplosiva(String nome){
         super(nome,
                 85,
-                12,
-                17,
+                10,
+                15,
                 4,
-                15);
+                14);
     }
     public int getFlechasEspeciais() {
         return flechasEspeciais;

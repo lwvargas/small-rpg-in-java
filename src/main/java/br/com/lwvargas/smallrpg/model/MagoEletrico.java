@@ -11,12 +11,12 @@ public class MagoEletrico extends Mago{
 
     public MagoEletrico(String nome){
         super(nome,
-                95,
-                13,
-                18,
+                90,
+                10,
+                15,
                 7,
-                7,
-                35);
+                9,
+                32);
     }
     @Override
     public String getNomeHabilidade(){

@@ -26,6 +26,10 @@ public abstract class Mago extends Personagem{
         manaAtual -= custo;
         return true;
     }
+    public void restaurarMana() {
+        manaAtual = manaMaxima;
+    }
+
     public void carregarMana(int manaSalva) {
         if (manaSalva < 0 || manaSalva > manaMaxima) {
             throw new IllegalArgumentException("A mana salva e invalida");

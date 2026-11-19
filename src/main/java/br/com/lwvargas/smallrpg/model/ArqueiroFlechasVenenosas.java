@@ -13,8 +13,8 @@ public class ArqueiroFlechasVenenosas extends Arqueiro{
                 90,
                 8,
                 13,
-                4,
-                18);
+                5,
+                16);
     }
     public int getFlechasEspeciais(){
         return flechasEspeciais;

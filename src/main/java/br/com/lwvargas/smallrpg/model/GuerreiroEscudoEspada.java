@@ -6,10 +6,10 @@ public class GuerreiroEscudoEspada extends Guerreiro{
 
     public GuerreiroEscudoEspada(String nome) {
         super(nome,
-                125,
-                7,
-                16,
+                120,
                 8,
+                13,
+                9,
                 10);
     }
     @Override

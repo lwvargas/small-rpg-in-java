@@ -6,8 +6,8 @@ public class TanqueRedutor extends Tanque{
                 180,
                 3,
                 7,
-                17,
-                2
+                20,
+                3
         );
     }
     @Override

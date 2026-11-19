@@ -6,6 +6,7 @@ import br.com.lwvargas.smallrpg.model.MissaoBosque;
 import br.com.lwvargas.smallrpg.model.MissaoCaverna;
 import br.com.lwvargas.smallrpg.model.MissaoChefeCaverna;
 import br.com.lwvargas.smallrpg.model.MissaoMontanha;
+import br.com.lwvargas.smallrpg.model.Mago;
 import br.com.lwvargas.smallrpg.model.Personagem;
 import br.com.lwvargas.smallrpg.service.EscritaArquivo;
 
@@ -103,6 +104,9 @@ public class Vila {
 
         personagem.limparEfeitos();
         personagem.restaurarVida();
+        if (personagem instanceof Mago mago) {
+            mago.restaurarMana();
+        }
         escritaArquivo.salvar(personagem, missoes);
         if (venceu && missao instanceof MissaoMontanha) {
             System.out.println("Fim de jogo. Obrigado por jogar!");

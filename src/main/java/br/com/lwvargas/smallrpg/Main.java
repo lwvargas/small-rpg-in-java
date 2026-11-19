@@ -13,7 +13,16 @@ public class Main {
         Vila vila = new Vila();
         LeituraArquivo leituraArquivo = new LeituraArquivo();
 
-        System.out.println("===== Bem vindo ao Java RPG =====");
+        System.out.println("    ██████    ██████    ██      ██    ██████              ████████    ████████      ██████    \n" +
+                "    ██████    ██████    ██      ██    ██████              ████████    ████████      ██████    \n" +
+                "      ██    ██      ██  ██      ██  ██      ██            ██      ██  ██      ██  ██          \n" +
+                "      ██    ██      ██  ██      ██  ██      ██            ██      ██  ██      ██  ██          \n" +
+                "      ██    ██████████  ██      ██  ██████████  ████████  ████████    ████████    ██    ████  \n" +
+                "      ██    ██████████  ██      ██  ██████████  ████████  ████████    ████████    ██    ████  \n" +
+                "██    ██    ██      ██    ██  ██    ██      ██            ██    ██    ██          ██      ██  \n" +
+                "██    ██    ██      ██    ██  ██    ██      ██            ██    ██    ██          ██      ██  \n" +
+                "  ████      ██      ██      ██      ██      ██            ██      ██  ██            ██████    \n" +
+                "  ████      ██      ██      ██      ██      ██            ██      ██  ██            ██████    ");
         System.out.println("1. Novo jogo");
         System.out.println("2. Carregar jogo");
         System.out.println("3. Sair");

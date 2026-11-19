@@ -12,10 +12,10 @@ public class ArqueiroFlechasMultiplas extends Arqueiro{
     public ArqueiroFlechasMultiplas(String nome){
         super(nome,
                 80,
-                5,
+                6,
                 10,
                 4,
-                18);
+                16);
     }
     @Override
     public String getNomeHabilidade(){

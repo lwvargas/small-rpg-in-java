@@ -7,12 +7,12 @@ public class MagoGelo extends Mago{
 
     public MagoGelo(String nome){
         super(nome,
-                110,
-                7,
-                12,
+                100,
                 9,
+                13,
+                8,
                 9,
-                50);
+                45);
     }
     @Override
     public String getNomeHabilidade(){

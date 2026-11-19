@@ -8,12 +8,12 @@ public class MagoFogo extends Mago{
 
     public MagoFogo(String nome){
         super(nome,
-                100,
-                11,
-                16,
+                95,
+                10,
+                15,
+                6,
                 8,
-                8,
-                40);
+                35);
     }
     @Override
     public String getNomeHabilidade(){
